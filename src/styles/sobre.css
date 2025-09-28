@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+.sobre-container {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 5%;
+  text-align: center;
+}
+.sobre-container h2 {
+  color: #6A0DAD;
+  font-size: 36px;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+.sobre-container p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.missao-valor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+}
+.missao-valor .card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  flex: 1 1 300px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.missao-valor .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+.missao-valor h3 {
+  color: #6A0DAD;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+.missao-valor p,
+.missao-valor ul {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  text-align: left;
+}
+.missao-valores ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+footer {
+  background: #6A0DAD;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 60px;
+  font-weight: 500;
+}
+
+/* ====================== RESPONSIVO ====================== */
+@media(max-width: 768px) {
+  .sobre-container h2 {
+    font-size: 32px;
+  }
+  .sobre-container p {
+    font-size: 16px;
+  }
+  .missao-valores {
+    flex-direction: column;
+  }
+}
