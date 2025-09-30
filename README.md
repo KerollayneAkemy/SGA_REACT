@@ -1,3 +1,7 @@
+DISCENTES: EMILY PEREIRA GONÇALVES, JOÃO VITOR NOGUEIRA DA SILVA E KEROLLAYNE AKEMY GONÇALVES PEREIRA
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
