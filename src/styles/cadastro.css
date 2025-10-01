@@ -92,12 +92,3 @@ footer{
     margin-top:60px;
     font-weight:500;
 }
-
-/* ====================== RESPONSIVO ====================== */
-@media(max-width:480px){
-    .auth-card{
-        padding:30px 20px;
-    }
-    .auth-card h2{font-size:28px;}
-    .auth-card input, .auth-card button{font-size:15px;}
-}

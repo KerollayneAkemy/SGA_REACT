@@ -91,11 +91,3 @@ footer {
     margin-top: 60px;
 }
 
-/* ====================== RESPONSIVO ====================== */
-@media(max-width:480px){
-    .login-card{
-        padding:30px 20px;
-    }
-    .login-card h2{font-size:28px;}
-    .login-card input, .login-card button{font-size:15px;}
-}

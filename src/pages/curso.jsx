@@ -25,9 +25,10 @@ const cursos = [
   },
   {
     nome: "Gestão Financeira",
-    semestre: "1° Semestre",
+    semestre: "2° Semestre",
     rota: "/disciplina/gestao-financeira",
   },
+  
 ];
 
 function Curso() {

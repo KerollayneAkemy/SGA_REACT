@@ -87,7 +87,6 @@ function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer>
         <p>© 2025 Sistema de Gestão Acadêmica. Todos os direitos reservados.</p>
       </footer>

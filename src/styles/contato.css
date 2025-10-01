@@ -80,12 +80,4 @@ footer{
     font-weight:500;
 }
 
-/* ====================== RESPONSIVO ====================== */
-@media(max-width:768px){
-    .contato-container{
-        padding:40px 20px;
-    }
-    .contato-container h2{font-size:32px;}
-    .contato-container p{font-size:14px;}
-    input, textarea, button{font-size:15px;}
-}
+

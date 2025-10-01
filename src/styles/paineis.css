@@ -130,12 +130,6 @@ form button:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* RESPONSIVO */
-@media(max-width:768px) {
-  .switch-usuario { flex-direction: column; }
-  form button { width: 100%; }
-}
-
 
 .menu-suspenso {
   position: absolute;
