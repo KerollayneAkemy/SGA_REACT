@@ -19,8 +19,7 @@ function Home() {
     },
     {
       nome: "Banco de Dados",
-      descricao:
-        "Gerencie e otimize bancos de dados relacionais e não-relacionais.",
+      descricao: "Gerencie e otimize bancos de dados relacionais e não-relacionais.",
       rota: "/disciplina/banco-dados",
     },
     {
