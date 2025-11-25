@@ -1,17 +1,31 @@
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "../styles/login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const entrarAluno = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/painel", { state: { tipo: "aluno" } });
-  };
+    setLoading(true);
+    setError("");
 
-  const entrarAdmin = (e) => {
-    e.preventDefault();
-    navigate("/painel", { state: { tipo: "admin" } });
+    const { data, error } = await signIn(email, password);
+    
+    if (error) {
+      setError(error.message);
+    } else {
+      const userRole = data.user.user_metadata?.role || 'aluno';
+      navigate("/painel", { state: { tipo: userRole } });
+    }
+    
+    setLoading(false);
   };
 
   return (
@@ -21,10 +35,26 @@ function Login() {
           <div className="login-card">
             <h2>Login</h2>
 
-            <form onSubmit={entrarAluno}>
-              <input type="email" placeholder="E-mail" required />
-              <input type="password" placeholder="Senha" required />
-              <button type="submit">Entrar</button>
+            {error && <div className="error-message">{error}</div>}
+
+            <form onSubmit={handleLogin}>
+              <input 
+                type="email" 
+                placeholder="E-mail" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required 
+              />
+              <input 
+                type="password" 
+                placeholder="Senha" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
+              <button type="submit" disabled={loading}>
+                {loading ? "Entrando..." : "Entrar"}
+              </button>
             </form>
 
             <p>
