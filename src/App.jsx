@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/Header.jsx";
 
 // páginas
@@ -15,23 +14,21 @@ import Painel from "./pages/painel.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/curso" element={<Curso />} />
-            <Route path="/disciplina/:cursoId" element={<Disciplina />} />
-            <Route path="/sobre" element={<Sobre />} />
-            <Route path="/contato" element={<Contato />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/painel" element={<Painel />} />
-          </Routes>
-        </main>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/curso" element={<Curso />} />
+          <Route path="/disciplina/:cursoId" element={<Disciplina />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/contato" element={<Contato />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/painel" element={<Painel />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 
