@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "../styles/paineis.css";
 
 function Painel() {
-  const [tipoUsuario, setTipoUsuario] = useState("aluno");
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [tipoUsuario, setTipoUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [menuAberto, setMenuAberto] = useState(false);
 
@@ -18,13 +22,18 @@ function Painel() {
     email: "",
   });
 
-  const usuario = {
-    nome: "João Silva",
-    avatar: "https://i.pravatar.cc/50",
-  };
-
   const menuRef = useRef();
-  const navigate = useNavigate();
+
+  // Define tipo de usuário baseado na autenticação
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    
+    const userRole = user.user_metadata?.role || location.state?.tipo || 'aluno';
+    setTipoUsuario(userRole);
+  }, [user, navigate, location.state]);
 
   // Fecha menu ao clicar fora
   useEffect(() => {
@@ -39,15 +48,8 @@ function Painel() {
     };
   }, []);
 
-  // Redireciona se não houver usuário logado
-  useEffect(() => {
-    if (!tipoUsuario) {
-      navigate("/login");
-    }
-  }, [tipoUsuario, navigate]);
-
-  const handleLogout = () => {
-    setTipoUsuario(null);
+  const handleLogout = async () => {
+    await signOut();
     navigate("/login");
   };
 
@@ -87,13 +89,7 @@ function Painel() {
         </h1>
 
         <div className="perfil-container" ref={menuRef}>
-          <img
-            src={usuario.avatar}
-            alt="Avatar"
-            className="avatar"
-            onClick={() => setMenuAberto(!menuAberto)}
-          />
-          <span className="nome-usuario">{usuario.nome}</span>
+          <span className="nome-usuario">{user?.user_metadata?.name || user?.email}</span>
 
           {menuAberto && (
             <div className="menu-suspenso">
@@ -103,24 +99,15 @@ function Painel() {
         </div>
       </div>
 
-      <div className="switch-usuario">
-        <SwitchButton
-          label="Entrar como Aluno"
-          active={tipoUsuario === "aluno"}
-          onClick={() => setTipoUsuario("aluno")}
-        />
-        <SwitchButton
-          label="Entrar como Admin"
-          active={tipoUsuario === "admin"}
-          onClick={() => setTipoUsuario("admin")}
-        />
-      </div>
+
 
       {mensagem && <div className="mensagem-estatica">{mensagem}</div>}
 
-      {tipoUsuario === "admin" ? (
+      {(tipoUsuario === "admin" || tipoUsuario === "professor") ? (
         <div className="painel-admin">
-          <h2 className="subtitulo-painel">Gestão de Cursos e Disciplinas</h2>
+          <h2 className="subtitulo-painel">
+            {tipoUsuario === "admin" ? "Gestão de Cursos e Disciplinas" : "Gestão de Disciplinas"}
+          </h2>
           <form className="form-cadastro" onSubmit={handleSubmitCurso}>
             <input
               type="text"

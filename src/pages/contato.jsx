@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { supabase } from "../lib/supabase";
 import "../styles/contato.css";
 
 const Contato = () => {
@@ -7,18 +8,41 @@ const Contato = () => {
     email: "",
     mensagem: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Mensagem enviada!");
+    setLoading(true);
 
-    // limpa os campos
-    setFormData({ nome: "", email: "", mensagem: "" });
+    try {
+      const { error } = await supabase
+        .from('mensagens_contato')
+        .insert([
+          {
+            nome: formData.nome,
+            email: formData.email,
+            mensagem: formData.mensagem,
+            created_at: new Date().toISOString()
+          }
+        ]);
+
+      if (error) throw error;
+
+      setSuccess(true);
+      setFormData({ nome: "", email: "", mensagem: "" });
+      
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (error) {
+      alert("Erro ao enviar mensagem: " + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,6 +53,12 @@ const Contato = () => {
           <p>
             Envie sua mensagem ou dúvida e entraremos em contato o mais rápido possível.
           </p>
+          
+          {success && (
+            <div className="success-message">
+              ✅ Mensagem enviada com sucesso!
+            </div>
+          )}
           <form id="form-contato" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -54,7 +84,9 @@ const Contato = () => {
               value={formData.mensagem}
               onChange={handleChange}
             />
-            <button type="submit">Enviar Mensagem</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Enviando..." : "Enviar Mensagem"}
+            </button>
           </form>
         </section>
       </main>
