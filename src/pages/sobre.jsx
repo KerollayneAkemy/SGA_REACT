@@ -40,9 +40,7 @@ function Sobre() {
         </section>
       </main>
 
-      <footer>
-        <p>&copy; 2025 Sistema de Gestão Acadêmica. Todos os direitos reservados.</p>
-      </footer>
+     
     </div>
   );
 }
