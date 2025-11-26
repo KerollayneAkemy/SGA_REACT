@@ -1,0 +1,131 @@
+/* =========================================================
+   RESET / BASE
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #6A0DAD, #4a057a);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
+.cadastro-container {
+    width: 100%;
+    padding: 60px 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.cadastro-main {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* =========================================================
+   CARD DE CADASTRO (compatível com JSX)
+========================================================= */
+.cadastro-card {
+    background: #ffffff;
+    padding: 40px 35px;
+    border-radius: 18px;
+    width: 100%;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+.cadastro-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #6A0DAD;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+.cadastro-input {
+    padding: 15px;
+    border: 2px solid #e0d0f2;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #fff;
+    transition: 0.25s ease;
+    outline: none;
+}
+
+.cadastro-input:focus {
+    border-color: #6A0DAD;
+    box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.18);
+}
+
+/* =========================================================
+   BOTÃO ENVIAR
+========================================================= */
+.cadastro-submit {
+    background: #6A0DAD;
+    color: #fff;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.cadastro-submit:hover {
+    background: #540a94;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(106, 13, 173, 0.28);
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+@media (max-width: 480px) {
+    .cadastro-card {
+        padding: 32px 22px;
+    }
+
+    .cadastro-title {
+        font-size: 28px;
+    }
+
+    .cadastro-input {
+        font-size: 15px;
+    }
+
+    .cadastro-submit {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,282 @@
+/* =========================================================
+   VARIÁVEIS DO TEMA
+========================================================= */
+:root {
+    --roxo: #6A0DAD;
+    --roxo-escuro: #4a057a;
+    --roxo-hover: #5b0995;
+
+    --texto: #333;
+    --branco: #fff;
+    --fundo: #f5f5f8;
+
+    --cinza-claro: #ececec;
+    --cinza: #dcdcdc;
+
+    --sucesso: #4caf50;
+    --perigo: #e53935;
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.professor-header {
+    background: var(--roxo);
+    color: var(--branco);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.professor-logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.professor-nav a {
+    margin: 0 15px;
+    color: var(--branco);
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s;
+    position: relative;
+}
+
+.professor-nav a:hover::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #ffd6ff;
+}
+
+/* =========================================================
+   DROPDOWN PERFIL
+========================================================= */
+.professor-dropdown {
+    position: relative;
+}
+
+.professor-btn-perfil {
+    background: #000;
+    color: #fff;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.professor-btn-perfil:hover {
+    background: #333;
+}
+
+.professor-dropdown-menu {
+    position: absolute;
+    right: 0;
+    background: var(--branco);
+    padding: 12px;
+    border-radius: 12px;
+    width: 220px;
+    margin-top: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fadeDown 0.25s ease;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.professor-dropdown-menu p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--roxo);
+    border-bottom: 1px solid var(--cinza);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.professor-btn-logout {
+    width: 100%;
+    padding: 10px;
+    background: var(--perigo);
+    color: var(--branco);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.professor-btn-logout:hover {
+    background: #c62828;
+}
+
+/* =========================================================
+   MAIN / CARDS
+========================================================= */
+.professor-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.professor-card {
+    background: var(--branco);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    transition: 0.3s;
+}
+
+.professor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+}
+
+.professor-card h2 {
+    color: var(--roxo);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* =========================================================
+   LISTA DE CURSOS
+========================================================= */
+.professor-cursos-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.professor-curso-item {
+    background: var(--branco);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: 0.3s;
+}
+
+.professor-curso-item:hover {
+    transform: translateY(-5px);
+}
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
+.professor-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.professor-input,
+.professor-select {
+    flex: 1 1 220px;
+    padding: 12px;
+    border: 2px solid #d8c7ec;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: 0.25s;
+}
+
+.professor-input:focus,
+.professor-select:focus {
+    border-color: var(--roxo);
+    box-shadow: 0 0 0 4px rgba(106,13,173,0.2);
+}
+
+.professor-btn {
+    flex: 1 1 200px;
+    padding: 12px 18px;
+    background: var(--roxo);
+    color: var(--branco);
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.professor-btn:hover {
+    background: var(--roxo-hover);
+}
+
+/* =========================================================
+   TABELA
+========================================================= */
+.professor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.professor-table th {
+    background: var(--roxo);
+    color: var(--branco);
+    padding: 14px;
+}
+
+.professor-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--cinza);
+}
+
+.professor-table tr:nth-child(even) {
+    background: var(--cinza-claro);
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+@media (max-width: 768px) {
+    .professor-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .professor-nav {
+        margin-top: 10px;
+    }
+
+    .professor-form input,
+    .professor-form select,
+    .professor-form button {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .professor-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

@@ -1,10 +1,13 @@
+/* ================= App.css LIMPO ================= */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  /* Removemos o text-align: center para você controlar isso em cada página */
 }
 
+/* Mantive as classes de logo caso você use em outro lugar, mas ajustadas */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -19,12 +22,8 @@
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {

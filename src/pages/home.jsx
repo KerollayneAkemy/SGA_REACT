@@ -19,8 +19,7 @@ function Home() {
     },
     {
       nome: "Banco de Dados",
-      descricao:
-        "Gerencie e otimize bancos de dados relacionais e não-relacionais.",
+      descricao: "Gerencie e otimize bancos de dados relacionais e não-relacionais.",
       rota: "/disciplina/banco-dados",
     },
     {
@@ -87,10 +86,7 @@ function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer>
-        <p>© 2025 Sistema de Gestão Acadêmica. Todos os direitos reservados.</p>
-      </footer>
+     
     </div>
   );
 }
