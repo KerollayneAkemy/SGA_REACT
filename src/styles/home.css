@@ -1,23 +1,46 @@
+/* =========================================
+   RESET E VARIÁVEIS
+========================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --cor-primaria: #6A0DAD;
+    --cor-primaria-escura: #4A057A;
+    --cor-secundaria: #FFC0FF;
+
+    --texto: #000;
+    --bg: #fff;
+    --bg-light: #f5f5f5;
+
+    --radius: 12px;
+    --sombra: 0 6px 18px rgba(0,0,0,0.1);
+    --sombra-hover: 0 10px 25px rgba(0,0,0,0.2);
+
+    --trans: 0.3s ease;
+}
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #fff;
-    color: #000;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--texto);
     line-height: 1.6;
 }
 
+
+/* =========================================
+   HERO SECTION
+========================================= */
 .hero {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 80px 5%;
-    background: linear-gradient(135deg, #6A0DAD, #4a057a);
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
     color: #fff;
 }
 
@@ -27,7 +50,7 @@ body {
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: clamp(32px, 5vw, 48px);
     margin-bottom: 20px;
 }
 
@@ -37,37 +60,43 @@ body {
 }
 
 .hero .btn {
-    background-color: #ffffff;
-    color: #6A0DAD;
+    background: #fff;
     padding: 14px 28px;
     border-radius: 8px;
     font-weight: bold;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
+    transition: var(--trans);
 }
 
 .hero .btn:hover {
-    background-color: #fff;
-    color: #4a057a;
-    transform: scale(1.05);
+    background: #e6e6e6;
 }
 
-/*  ANIMAÇÕES  */
+
+/* =========================================
+   ANIMAÇÕES
+========================================= */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
 @keyframes fadeInLeft {
     from { opacity: 0; transform: translateX(-50px); }
     to { opacity: 1; transform: translateX(0); }
 }
 
+
+/* =========================================
+   CURSOS
+========================================= */
 .cursos-preview {
     padding: 60px 5%;
-    background: #f5f5f5;
+    background: var(--bg-light);
     text-align: center;
 }
 
 .cursos-preview h2 {
-    color: #6A0DAD;
+    color: var(--cor-primaria);
     font-size: 36px;
     margin-bottom: 40px;
 }
@@ -76,36 +105,39 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px;
+    gap: 20px;
 }
 
 .curso-card {
     background: #fff;
     padding: 25px;
-    border-radius: 15px;
-    flex: 1 1 250px;
+    border-radius: var(--radius);
     max-width: 300px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1 1 250px;
+    box-shadow: var(--sombra);
+    transition: var(--trans);
     cursor: pointer;
 }
 
 .curso-card:hover {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
 }
 
 .curso-card h3 {
-    color: #6A0DAD;
-    margin-bottom: 12px;
+    color: var(--cor-primaria);
+    margin-bottom: 10px;
     font-size: 22px;
 }
 
 .curso-card p {
     font-size: 16px;
-    line-height: 1.5;
 }
 
+
+/* =========================================
+   MISSÃO E VALORES
+========================================= */
 .missao-valores {
     padding: 60px 5%;
     background: #fff;
@@ -113,7 +145,7 @@ body {
 }
 
 .missao-valores h2 {
-    color: #6A0DAD;
+    color: var(--cor-primaria);
     font-size: 36px;
     margin-bottom: 40px;
 }
@@ -126,19 +158,19 @@ body {
 }
 
 .valor-card {
-    background: #6A0DAD;
+    background: var(--cor-primaria);
     color: #fff;
     padding: 30px;
-    border-radius: 15px;
-    flex: 1 1 280px;
+    border-radius: var(--radius);
     max-width: 400px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1 1 300px;
+    box-shadow: var(--sombra);
+    transition: var(--trans);
 }
 
 .valor-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
 }
 
 .valor-card h3 {
@@ -154,16 +186,20 @@ body {
 }
 
 .valor-card ul {
-    list-style-type: disc;
+    list-style: disc;
     padding-left: 20px;
 }
 
-footer {
-    background: #6A0DAD;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    margin-top: 60px;
-    font-weight: 500;
-}
 
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+@media (max-width: 768px) {
+    .hero {
+        text-align: center;
+    }
+
+    .hero-container {
+        margin-bottom: 40px;
+    }
+}

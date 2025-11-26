@@ -1,14 +1,18 @@
+/* ================= HEADER ================= */
 header {
   background: #6A0DAD;
   color: #fff;
+  /* Alinha logo à esquerda e o resto (header-right) à direita */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 5%;
+  padding: 15px 5%;
   position: sticky;
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-wrap: wrap; 
+  gap: 10px;
 }
 
 header .logo {
@@ -17,10 +21,20 @@ header .logo {
   letter-spacing: 1px;
 }
 
+/* NOVO: Container para agrupar navegação e botões/perfil à direita */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaço entre nav e o botão/perfil */
+  flex-wrap: wrap; 
+}
+
+/* Modificado: nav agora está dentro do .header-right */
 header nav {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
+  flex-wrap: wrap; 
 }
 
 header nav a {
@@ -52,6 +66,8 @@ header nav a:hover::after {
   transition: 0.3s;
   border: none;
   color: #fff;
+  /* Garante que o botão esteja sempre alinhado */
+  white-space: nowrap; 
 }
 
 .btn-login:hover,
@@ -59,27 +75,57 @@ header nav a:hover::after {
   background: #333;
 }
 
-.painel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
+/* ================= PAINEL DO USUÁRIO ================= */
+/* Se este painel for usado fora do header, mantenha o CSS original,
+   se for usado dentro (como item à direita), ajuste: */
 .perfil-container {
   position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  /* Não precisa mais de painel-header para este contexto, pois ele está
+     diretamente no header-right */
 }
 
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
 }
 
 .nome-usuario {
   font-weight: bold;
+  color: #fff;
+}
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Faz a seção direita ocupar a linha toda e alinhar à esquerda */
+  .header-right {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 10px; /* Adiciona um espaço da logo */
+  }
+
+  header nav {
+    /* Mantém a navegação compacta, se necessário */
+    gap: 10px;
+  }
+
+  /* O bloco .painel-header original não existe mais no header, então este CSS pode ser removido 
+     ou adaptado se for usado em outro lugar */
+  /*
+  .painel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  */
 }

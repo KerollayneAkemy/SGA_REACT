@@ -86,9 +86,7 @@ function Home() {
         </div>
       </section>
 
-      <footer>
-        <p>© 2025 Sistema de Gestão Acadêmica. Todos os direitos reservados.</p>
-      </footer>
+     
     </div>
   );
 }

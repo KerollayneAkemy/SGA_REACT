@@ -1,83 +1,152 @@
+
+:root {
+  --roxo-principal: #6A0DAD;
+  --roxo-escuro: #4a057a;
+  --rosa-claro: #FFC0FF;
+  --cinza-texto: #333;
+  --cinza-secundario: #555;
+  --fundo-claro: #f4f3f8;
+  --preto: #000;
+  --branco: #fff;
+}
+
+/* =======================================
+   RESET / BASE
+======================================= */
 * {
-margin:0;
-padding:0;
-box-sizing:border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family:'Segoe UI', Arial, sans-serif;
-    background:#f8f8f8;
-    color:#333;
-    line-height:1.6;
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--fundo-claro);
+  color: var(--cinza-texto);
+  line-height: 1.7;
 }
 
-.contato-container{
-    max-width:700px;
-    margin:80px auto;
-    padding:0 5%;
-    background:#fff;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    padding:50px 30px;
-    text-align:center;
-    transition:transform 0.3s, box-shadow 0.3s;
-}
-.contato-container:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px rgba(0,0,0,0.2);
-}
-.contato-container h2{
-    color:#6A0DAD;
-    font-size:36px;
-    margin-bottom:15px;
-}
-.contato-container p{
-    font-size:16px;
-    color:#555;
-    margin-bottom:30px;
+/* =======================================
+   CONTATO CONTAINER
+======================================= */
+.contato-container {
+  max-width: 700px;
+  margin: 70px auto;
+  padding: 40px 35px;
+  background: var(--branco);
+  border-radius: 14px;
+  text-align: left; /* 🔥 inputs e textos à esquerda */
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.6s ease;
 }
 
-/* FORMULÁRIO */
-form{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-}
-input, textarea{
-    padding:12px 15px;
-    border-radius:10px;
-    border:2px solid #6A0DAD;
-    font-size:16px;
-    transition:0.3s;
-}
-input:focus, textarea:focus{
-    outline:none;
-    border-color:#4a057a;
-    box-shadow:0 0 10px rgba(106,13,173,0.3);
-}
-textarea{resize:none;}
-button{
-    padding:15px;
-    background:#6A0DAD;
-    color:#fff;
-    font-weight:bold;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:16px;
-    transition:0.3s;
-}
-button:hover{
-    background:#4a057a;
+/* 🔥 TÍTULO CENTRALIZADO */
+.contato-container h2 {
+  color: var(--roxo-principal);
+  font-size: 32px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
-footer{
-    background:#6A0DAD;
-    color:#fff;
-    text-align:center;
-    padding:20px;
-    margin-top:60px;
-    font-weight:500;
+/* 🔥 DESCRIÇÃO ALINHADA À ESQUERDA */
+.contato-container p {
+  font-size: 16px;
+  color: var(--cinza-secundario);
+  margin-bottom: 28px;
+  max-width: 550px;
 }
 
+/* FORM */
+.form-profissional {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 10px;
+}
 
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  font-size: 15px;
+}
+
+input, textarea {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 2px solid var(--roxo-principal);
+  background: #fafafa;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+  min-height: 130px;
+}
+
+/* Mensagens */
+.error-msg {
+  color: #e53935;
+  font-size: 13px;
+  margin-top: 4px;
+  display: none;
+}
+
+.success-msg {
+  color: #2ecc71;
+  font-size: 15px;
+  margin-top: 8px;
+  display: none;
+  font-weight: 600;
+  text-align: center; /* 🔥 deixa o "sucesso" bonito também */
+}
+
+/* 🔥 BOTÃO CENTRALIZADO */
+button.btn-submit {
+  padding: 15px 40px;
+  background: var(--roxo-principal);
+  color: var(--branco);
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  margin: 0 auto; /* 🔥 CENTRALIZA O BOTÃO */
+  display: block;
+}
+
+button.btn-submit:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.35);
+}
+
+/* =======================================
+   FOOTER
+======================================= */
+footer {
+  background: var(--roxo-principal);
+  color: var(--branco);
+  text-align: center;
+  padding: 22px;
+  margin-top: 60px;
+  font-size: 15px;
+  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* =======================================
+   ANIMAÇÃO ENTRADA
+======================================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

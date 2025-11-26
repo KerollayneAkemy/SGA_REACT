@@ -1,101 +1,89 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
+import { supabase } from "../services/supabaseClient";
+
 import "../styles/cadastro.css";
 
-function Cadastro() {
-  const navigate = useNavigate();
-  const { signUp } = useAuth();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "aluno"
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+export default function Cadastro() {
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
   const handleCadastro = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
 
-    const { data, error } = await signUp(formData.email, formData.password, {
-      name: formData.name,
-      role: formData.role
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      alert("Cadastro realizado com sucesso! Verifique seu e-mail.");
-      navigate("/login");
+    if (!nome || !email || !senha) {
+      alert("Preencha todos os campos.");
+      return;
     }
-    
-    setLoading(false);
+
+    try {
+      // --- CADASTRO NO AUTH ---
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: senha,
+        options: {
+          data: {
+            nome: nome  // ← O TRIGGER USA ESTE VALOR
+          }
+        }
+      });
+
+      if (error) {
+        console.error("Erro no cadastro:", error);
+        alert("Erro ao cadastrar: " + error.message);
+        return;
+      }
+
+      alert("Cadastro realizado! Verifique seu e-mail para confirmar.");
+      window.location.href = "/login";
+
+    } catch (err) {
+      console.error("Erro inesperado:", err);
+      alert("Erro inesperado. Tente novamente.");
+    }
   };
 
   return (
-    <div className="page-container">
-      <main>
-        <section className="auth-container">
-          <div className="auth-card">
-            <h2>Cadastro</h2>
-            
-            {error && <div className="error-message">{error}</div>}
-            
-            <form onSubmit={handleCadastro}>
-              <input 
-                type="text" 
-                name="name"
-                placeholder="Nome completo" 
-                value={formData.name}
-                onChange={handleChange}
-                required 
-              />
-              <input 
-                type="email" 
-                name="email"
-                placeholder="E-mail" 
-                value={formData.email}
-                onChange={handleChange}
-                required 
-              />
-              <input 
-                type="password" 
-                name="password"
-                placeholder="Senha" 
-                value={formData.password}
-                onChange={handleChange}
-                required 
-              />
-              <select 
-                name="role" 
-                value={formData.role} 
-                onChange={handleChange}
-                required
-              >
-                <option value="aluno">Aluno</option>
-                <option value="professor">Professor</option>
-                <option value="admin">Administrador</option>
-              </select>
-              <button type="submit" disabled={loading}>
-                {loading ? "Cadastrando..." : "Cadastrar"}
-              </button>
-            </form>
-            <p>Já possui conta? <Link to="/login">Login</Link></p>
-          </div>
-        </section>
+    <div className="cadastro-container">
+      <main className="cadastro-main">
+        <form onSubmit={handleCadastro} className="cadastro-card">
+
+          <h2 className="cadastro-title">Criar Conta</h2>
+
+          <input
+            type="text"
+            className="cadastro-input"
+            placeholder="Nome completo"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            required
+          />
+
+          <input
+            type="email"
+            className="cadastro-input"
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            className="cadastro-input"
+            placeholder="Senha (mínimo 6 caracteres)"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+            minLength={6}
+          />
+
+          <button type="submit" className="cadastro-submit">
+            Cadastrar
+          </button>
+
+        </form>
       </main>
     </div>
   );
 }
-
-export default Cadastro;

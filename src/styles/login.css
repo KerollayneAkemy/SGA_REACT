@@ -1,93 +1,141 @@
+/* =========================================================
+   RESET / BASE
+========================================================= */
 * {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family:'Segoe UI', Arial, sans-serif;
-    background:#f0f0f5;
-    color:#333;
-    line-height:1.6;
+body {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #6A0DAD, #4a057a);
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.login-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:80vh;
-    padding:20px;
-}
-.login-card{
-    background:#fff;
-    padding:40px 30px;
-    border-radius:15px;
-    max-width:400px;
-    width:100%;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
-    transition:transform 0.3s, box-shadow 0.3s;
-}
-.login-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px rgba(0,0,0,0.2);
-}
-.login-card h2{
-    color:#6A0DAD;
-    font-size:32px;
-    margin-bottom:30px;
-    letter-spacing:1px;
-}
-.login-card form{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-}
-.login-card input{
-    padding:12px 15px;
-    border-radius:10px;
-    border:2px solid #6A0DAD;
-    font-size:16px;
-    transition:0.3s;
-}
-.login-card input:focus{
-    outline:none;
-    border-color:#4a057a;
-    box-shadow:0 0 10px rgba(106,13,173,0.3);
-}
-.login-card button{
-    padding:15px;
-    background:#6A0DAD;
-    color:#fff;
-    font-weight:bold;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:16px;
-    transition:0.3s;
-}
-.login-card button:hover{
-    background:#4a057a;
-}
-.login-card p{
-    margin-top:20px;
-    font-size:14px;
-}
-.login-card p a{
-    color:#6A0DAD;
-    text-decoration:none;
-    font-weight:bold;
-    transition:0.3s;
-}
-.login-card p a:hover{
-    color:#4a057a;
+/* =========================================================
+   CONTAINER
+========================================================= */
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 60px 5%;
 }
 
-footer {
-    background: #6A0DAD;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    margin-top: 60px;
+.login-main {
+  width: 100%;
+  max-width: 420px;
 }
 
+/* =========================================================
+   FORM / CARD
+========================================================= */
+.login-box {
+  background: #ffffff;
+  padding: 40px 34px;
+  border-radius: 18px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #6A0DAD;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+.login-input {
+  padding: 15px;
+  border: 2px solid #e0d0f2;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: 0.25s;
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: #6A0DAD;
+  box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.15);
+}
+
+/* =========================================================
+   BOTÃO LOGIN
+========================================================= */
+.login-submit {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #6A0DAD;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.login-submit:hover {
+  background: #540a94;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(106, 13, 173, 0.3);
+}
+
+/* =========================================================
+   BOTÃO CADASTRAR
+========================================================= */
+.login-cadastrar {
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 10px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #6A0DAD;
+  border: 2px solid #6A0DAD;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.login-cadastrar:hover {
+  background: #6A0DAD;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 30px 20px;
+  }
+
+  .login-title {
+    font-size: 28px;
+  }
+}

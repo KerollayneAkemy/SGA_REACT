@@ -1,70 +1,104 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
+import { supabase } from "../services/supabaseClient";
 import "../styles/login.css";
 
-function Login() {
-  const navigate = useNavigate();
-  const { signIn } = useAuth();
+export default function Login() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [senha, setSenha] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
 
-    const { data, error } = await signIn(email, password);
-    
-    if (error) {
-      setError(error.message);
-    } else {
-      const userRole = data.user.user_metadata?.role || 'aluno';
-      navigate("/painel", { state: { tipo: userRole } });
+    if (!email || !senha) {
+      alert("Preencha todos os campos.");
+      return;
     }
-    
-    setLoading(false);
+
+    try {
+      const { data: loginData, error: loginError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password: senha,
+        });
+
+      if (loginError) {
+        alert("Erro no login: " + loginError.message);
+        return;
+      }
+
+      const user = loginData.user;
+      if (!user) {
+        alert("Erro inesperado: usuário não encontrado.");
+        return;
+      }
+
+      const { data: userData, error: userDataError } = await supabase
+        .from("usuarios")
+        .select("user_role")
+        .eq("id", user.id)
+        .single();
+
+      if (userDataError || !userData) {
+        alert("Erro ao buscar dados do usuário.");
+        return;
+      }
+
+      const role = userData.user_role;
+
+      switch (role) {
+        case "aluno":
+          window.location.href = "/painel-aluno";
+          break;
+        case "professor":
+          window.location.href = "/painel-professor";
+          break;
+        case "admin":
+          window.location.href = "/painel-admin";
+          break;
+        default:
+          alert("Role desconhecida. Contate o suporte.");
+          await supabase.auth.signOut();
+          break;
+      }
+    } catch (err) {
+      alert("Ocorreu um erro inesperado. Tente novamente.");
+      console.error(err);
+    }
   };
 
   return (
-    <div className="page-container">
-      <main>
-        <section className="login-container">
-          <div className="login-card">
-            <h2>Login</h2>
+    <div className="login-container">
+      <main className="login-main">
+        <form className="login-box" onSubmit={handleLogin}>
+          <h2 className="login-title">Entrar</h2>
 
-            {error && <div className="error-message">{error}</div>}
+          <input
+            type="email"
+            className="login-input"
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-            <form onSubmit={handleLogin}>
-              <input 
-                type="email" 
-                placeholder="E-mail" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required 
-              />
-              <input 
-                type="password" 
-                placeholder="Senha" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required 
-              />
-              <button type="submit" disabled={loading}>
-                {loading ? "Entrando..." : "Entrar"}
-              </button>
-            </form>
+          <input
+            type="password"
+            className="login-input"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+          />
 
-            <p>
-              Não possui conta? <Link to="/cadastro">Cadastre-se aqui</Link>
-            </p>
-          </div>
-        </section>
+          <button type="submit" className="login-submit">
+            Entrar
+          </button>
+
+          <a href="/cadastro" className="login-cadastrar">
+            Criar conta
+          </a>
+        </form>
       </main>
     </div>
   );
 }
-
-export default Login;

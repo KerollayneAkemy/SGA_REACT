@@ -1,17 +1,8 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { NavLink } from "react-router-dom";
 import "../styles/header.css";
 
-function Header() {
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await signOut();
-    navigate("/");
-  };
-
+function Header({ usuario, handleLogout }) {
   return (
     <header>
       <div className="logo">SGA</div>
@@ -21,10 +12,11 @@ function Header() {
         <NavLink to="/sobre" className={({ isActive }) => (isActive ? "active" : "")}>Sobre</NavLink>
         <NavLink to="/contato" className={({ isActive }) => (isActive ? "active" : "")}>Contato</NavLink>
 
-        {user ? (
+        {/* Botão login ou usuário logado */}
+        {usuario ? (
           <div className="usuario-logado">
-            <span>{user.user_metadata?.name || user.email}</span>
-            <NavLink to="/painel" className="btn-painel">Painel</NavLink>
+            <img src={usuario.avatar} alt="Avatar" className="avatar" />
+            <span>{usuario.nome}</span>
             <button className="btn-logout" onClick={handleLogout}>Sair</button>
           </div>
         ) : (

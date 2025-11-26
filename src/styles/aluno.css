@@ -1,0 +1,327 @@
+/* =========================================================
+   BASE / RESET
+========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --aluno-roxo: #6A0DAD;
+  --aluno-roxo-dark: #4a057a;
+  --aluno-bg: #f5f4fa;
+  --aluno-branco: #ffffff;
+  --aluno-texto: #333;
+  --aluno-shadow: rgba(0, 0, 0, 0.15);
+
+  /* Modal */
+  --modal-bg: rgba(0, 0, 0, 0.55);
+  --modal-content-bg: #ffffff;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: var(--aluno-bg);
+  color: var(--aluno-texto);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.aluno-header {
+  background: var(--aluno-roxo);
+  color: var(--aluno-branco);
+  padding: 18px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.22);
+}
+
+.aluno-logo {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.aluno-header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.aluno-nav a {
+  color: #fff;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: 0.25s;
+}
+
+.aluno-nav a:hover::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: #ffceff;
+}
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.aluno-dropdown {
+  position: relative;
+}
+
+.aluno-btn-perfil {
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.aluno-btn-perfil:hover {
+  background: #333;
+}
+
+.aluno-menu-perfil {
+  display: none;
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  width: 220px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.aluno-menu-perfil p {
+  margin-bottom: 10px;
+  color: var(--aluno-roxo-dark);
+  font-weight: 600;
+}
+
+.aluno-menu-perfil a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: var(--aluno-texto);
+  border-radius: 8px;
+  transition: 0.25s;
+}
+
+.aluno-menu-perfil a:hover {
+  background: #f0e6ff;
+}
+
+.aluno-menu-perfil.ativo {
+  display: block;
+}
+
+/* Botão sair */
+.aluno-btn-sair {
+  background: #e53935;
+  color: white !important;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.aluno-btn-sair:hover {
+  background: #c62828;
+}
+
+/* =========================================================
+   MAIN / CONTEÚDO
+========================================================= */
+
+.aluno-main {
+  padding: 50px 5%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.aluno-container {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* CARDS */
+.aluno-card {
+  background: var(--aluno-branco);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px var(--aluno-shadow);
+  transition: 0.25s;
+}
+
+.aluno-card:hover {
+  transform: translateY(-4px);
+}
+
+.aluno-card h2 {
+  color: var(--aluno-roxo);
+  margin-bottom: 15px;
+  font-size: 26px;
+}
+
+/* =========================================================
+   TABELA DE NOTAS
+========================================================= */
+
+.aluno-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.aluno-tabela th {
+  background: var(--aluno-roxo);
+  color: #fff;
+  padding: 14px;
+  text-align: left;
+}
+
+.aluno-tabela td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.aluno-tabela tr:nth-child(even) {
+  background: #f7f2ff;
+}
+
+.aluno-tabela tr:hover {
+  background: #efe4ff;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+.aluno-footer {
+  background: var(--aluno-roxo);
+  padding: 20px;
+  color: white;
+  text-align: center;
+  border-radius: 30px 30px 0 0;
+  margin-top: 50px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   MODAL – Meus Cursos
+========================================================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  animation: scaleIn 0.25s ease;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  color: var(--aluno-roxo);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* Lista de cursos */
+.modal-curso-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.modal-curso-item {
+  background: #f7f2ff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.25s;
+}
+
+.modal-curso-item:hover {
+  background: #ece0ff;
+}
+
+.curso-status {
+  background: var(--aluno-roxo);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* Botão fechar */
+.modal-close {
+  width: 100%;
+  background: var(--aluno-roxo);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.modal-close:hover {
+  background: var(--aluno-roxo-dark);
+}
+.aluno-menu-perfil {
+  display: none;
+}
+
+.aluno-menu-perfil.ativo {
+  display: block;
+}
+
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
