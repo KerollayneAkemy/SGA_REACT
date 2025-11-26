@@ -13,6 +13,7 @@ import PainelProfessor from "./pages/painel-professor.jsx";
 import PainelAdmin from "./pages/painel-admin.jsx";
 import Sobre from "./pages/sobre.jsx";
 import Contato from "./pages/contato.jsx";
+import MeusCursos from "./pages/meuscursos.jsx";
 
 // 🔥 Componente Wrapper para esconder Header/Footer em certas rotas
 function LayoutWrapper({ children }) {
@@ -50,10 +51,13 @@ function App() {
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/contato" element={<Contato />} />
 
+
           {/* Painéis sem Header/Footer */}
           <Route path="/painel-aluno" element={<PainelAluno />} />
           <Route path="/painel-professor" element={<PainelProfessor />} />
           <Route path="/painel-admin" element={<PainelAdmin />} />
+                    <Route path="/meuscursos" element={<MeusCursos />} />
+
         </Routes>
       </LayoutWrapper>
     </BrowserRouter>

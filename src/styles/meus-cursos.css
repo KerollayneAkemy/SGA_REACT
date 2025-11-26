@@ -22,23 +22,7 @@ body {
   --branco: #ffffff;
 }
 
-/* =========================================================
-   HEADER
-========================================================= */
-.meuscursos-header {
-  background: var(--roxo);
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--branco);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-}
 
-.meuscursos-logo {
-  font-size: 26px;
-  font-weight: 700;
-}
 
 /* DROPDOWN */
 .meuscursos-dropdown {
@@ -208,13 +192,3 @@ body {
   border-radius: 12px;
 }
 
-/* FOOTER */
-.meuscursos-footer {
-  margin-top: 60px;
-  background: var(--roxo);
-  padding: 22px;
-  text-align: center;
-  color: white;
-  border-radius: 24px 24px 0 0;
-  font-weight: 600;
-}

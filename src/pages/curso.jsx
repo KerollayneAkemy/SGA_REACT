@@ -53,6 +53,7 @@ export default function Cursos() {
   const [cursoAtual, setCursoAtual] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // BUSCAR CURSOS
   useEffect(() => {
     const fetchCursos = async () => {
       setIsLoading(true);
@@ -99,6 +100,7 @@ export default function Cursos() {
   const abrirModal = (curso) => setCursoAtual(curso);
   const fecharModal = () => setCursoAtual(null);
 
+  // FUNÇÃO DE INSCRIÇÃO
   const inscreverCurso = async () => {
     if (!cursoAtual) return;
 
@@ -110,6 +112,7 @@ export default function Cursos() {
         return;
       }
 
+      // VERIFICA ROLE
       const { data: usuario } = await supabase
         .from("usuarios")
         .select("user_role")
@@ -121,6 +124,7 @@ export default function Cursos() {
         return;
       }
 
+      // VERIFICA SE JÁ ESTÁ MATRICULADO
       const { data: jaMatriculado } = await supabase
         .from("matriculas")
         .select("id")
@@ -134,6 +138,7 @@ export default function Cursos() {
         return;
       }
 
+      // INSERE MATRÍCULA
       const { error } = await supabase
         .from("matriculas")
         .insert([{ aluno_id: session.user.id, curso_id: cursoAtual.id }]);
@@ -141,7 +146,12 @@ export default function Cursos() {
       if (error) throw error;
 
       alert(`Inscrição realizada com sucesso no curso: ${cursoAtual.nome}`);
+
       fecharModal();
+
+      // 🔥 REDIRECIONA PARA MEUS CURSOS
+      window.location.href = "/meuscursos";
+
     } catch (err) {
       console.error("Erro ao inscrever:", err);
       alert("Erro ao se inscrever: " + err.message);

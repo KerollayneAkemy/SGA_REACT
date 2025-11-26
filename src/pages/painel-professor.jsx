@@ -14,54 +14,83 @@ export default function PainelProfessor() {
   const [menuAtivo, setMenuAtivo] = useState(false);
 
   useEffect(() => {
-    const carregarPainel = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return (window.location.href = "/login");
+    async function carregarPainel() {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return (window.location.href = "/login");
 
-      const professorId = session.user.id;
+        const professorId = session.user.id;
 
-      const { data: professorData } = await supabase
-        .from("usuarios")
-        .select("nome, email, user_role")
-        .eq("id", professorId)
-        .single();
+        // BUSCA PERFIL
+        const { data: prof } = await supabase
+          .from("usuarios")
+          .select("*")
+          .eq("id", professorId)
+          .single();
 
-      if (!professorData || professorData.user_role !== "professor") {
-        alert("Acesso negado!");
-        return (window.location.href = "/login");
+        if (!prof || prof.user_role !== "professor") {
+          alert("Acesso negado");
+          return (window.location.href = "/login");
+        }
+
+        setProfessor(prof);
+
+        // BUSCAR CURSOS DO PROFESSOR
+        const { data: cursosData } = await supabase
+          .from("cursos")
+          .select("*")
+          .eq("professor_id", professorId);
+
+        setCursos(cursosData || []);
+
+        carregarHistorico(professorId);
+
+      } catch (err) {
+        console.error("Erro ao carregar painel:", err);
       }
-
-      setProfessor(professorData);
-
-      const { data: cursosData } = await supabase
-        .from("cursos")
-        .select("*")
-        .eq("professor_id", professorId);
-
-      setCursos(cursosData || []);
-
-      carregarHistorico(professorId);
-    };
+    }
 
     carregarPainel();
   }, []);
 
-  const carregarAlunos = async (cursoId) => {
+  // =========================================================
+  // BUSCAR ALUNOS MATRICULADOS NO CURSO
+  // =========================================================
+  async function carregarAlunos(cursoId) {
     setCursoSelecionado(cursoId);
+    setAlunos([]);
 
-    const { data: matriculas } = await supabase
+    // BUSCA MATRÍCULAS DESSE CURSO
+    const { data: mats } = await supabase
       .from("matriculas")
-      .select("aluno_id, aluno:usuarios(id, nome)")
+      .select("aluno_id")
       .eq("curso_id", cursoId);
 
-    setAlunos(matriculas.map((m) => m.aluno));
-  };
+    if (!mats || mats.length === 0) return;
 
-  const lancarNota = async (e) => {
+    // Carregar nomes dos alunos manualmente
+    let listaAlunos = [];
+    for (const m of mats) {
+      const { data: aluno } = await supabase
+        .from("usuarios")
+        .select("id, nome")
+        .eq("id", m.aluno_id)
+        .single();
+
+      if (aluno) listaAlunos.push(aluno);
+    }
+
+    setAlunos(listaAlunos);
+  }
+
+  // =========================================================
+  // LANÇAR NOTA
+  // =========================================================
+  async function lancarNota(e) {
     e.preventDefault();
 
-    if (!cursoSelecionado || !alunoSelecionado) {
-      alert("Selecione o curso e o aluno!");
+    if (!cursoSelecionado || !alunoSelecionado || !tipoAtividade || !nota) {
+      alert("Preencha todos os campos!");
       return;
     }
 
@@ -72,31 +101,74 @@ export default function PainelProfessor() {
       nota: Number(nota),
     });
 
-    if (error) return alert("Erro ao lançar nota.");
+    if (error) {
+      console.error(error);
+      alert("Erro ao lançar nota.");
+      return;
+    }
 
-    alert("Nota lançada!");
+    alert("Nota lançada com sucesso!");
     setTipoAtividade("");
     setNota("");
     carregarHistorico(professor.id);
-  };
+  }
 
-  const carregarHistorico = async (professorId) => {
-    const { data } = await supabase
-      .from("notas")
-      .select(`
-        id, atividade, nota, data,
-        aluno:usuarios!notas_aluno_id_fkey(id, nome),
-        curso:cursos!notas_curso_id_fkey(id, nome, professor_id)
-      `)
-      .eq("curso.professor_id", professorId);
+  // =========================================================
+  // HISTÓRICO DO PROFESSOR
+  // =========================================================
+  async function carregarHistorico(professorId) {
+    try {
+      // Buscar cursos desse professor
+      const { data: cursosProf } = await supabase
+        .from("cursos")
+        .select("id")
+        .eq("professor_id", professorId);
 
-    setHistorico(data || []);
-  };
+      if (!cursosProf) return;
 
-  const logout = async () => {
+      const resultado = [];
+
+      for (const c of cursosProf) {
+        const { data: notas } = await supabase
+          .from("notas")
+          .select("id, atividade, nota, data, aluno_id")
+          .eq("curso_id", c.id);
+
+        if (notas && notas.length > 0) {
+          for (const n of notas) {
+            // BUSCAR NOME DO ALUNO
+            const { data: aluno } = await supabase
+              .from("usuarios")
+              .select("nome")
+              .eq("id", n.aluno_id)
+              .single();
+
+            // BUSCAR NOME DO CURSO
+            const { data: cursoData } = await supabase
+              .from("cursos")
+              .select("nome")
+              .eq("id", c.id)
+              .single();
+
+            resultado.push({
+              ...n,
+              aluno_nome: aluno?.nome ?? "—",
+              curso_nome: cursoData?.nome ?? "—",
+            });
+          }
+        }
+      }
+
+      setHistorico(resultado);
+    } catch (err) {
+      console.error("Erro ao carregar histórico:", err);
+    }
+  }
+
+  async function logout() {
     await supabase.auth.signOut();
     window.location.href = "/login";
-  };
+  }
 
   if (!professor) return <p>Carregando...</p>;
 
@@ -104,13 +176,6 @@ export default function PainelProfessor() {
     <div className="professor-container">
       <header className="professor-header">
         <div className="professor-logo">SGA — Professor</div>
-
-        <nav className="professor-nav">
-          <a href="/">Home</a>
-          <a href="/curso">Cursos</a>
-          <a href="/sobre">Sobre</a>
-          <a href="/contato">Contato</a>
-        </nav>
 
         <div className="professor-dropdown">
           <button
@@ -134,8 +199,8 @@ export default function PainelProfessor() {
 
       <main className="professor-main">
         <section className="professor-card">
-          <h2>👋 Bem-vindo(a), {professor.nome}!</h2>
-          <p>Gerencie suas disciplinas e notas.</p>
+          <h2>👋 Bem-vindo(a), {professor.nome}</h2>
+          <p>Gerencie seus cursos e notas dos alunos.</p>
         </section>
 
         <section className="professor-card">
@@ -185,7 +250,7 @@ export default function PainelProfessor() {
             <input
               type="text"
               className="professor-input"
-              placeholder="Tipo da Atividade"
+              placeholder="Tipo da atividade"
               value={tipoAtividade}
               onChange={(e) => setTipoAtividade(e.target.value)}
               required
@@ -203,14 +268,14 @@ export default function PainelProfessor() {
               required
             />
 
-            <button className="professor-btn" type="submit">
+            <button type="submit" className="professor-btn">
               Lançar Nota
             </button>
           </form>
         </section>
 
         <section className="professor-card">
-          <h2>📉 Histórico</h2>
+          <h2>📊 Histórico</h2>
 
           <table className="professor-table">
             <thead>
@@ -225,13 +290,11 @@ export default function PainelProfessor() {
             <tbody>
               {historico.map((h) => (
                 <tr key={h.id}>
-                  <td>{h.aluno?.nome}</td>
-                  <td>{h.curso?.nome}</td>
+                  <td>{h.aluno_nome}</td>
+                  <td>{h.curso_nome}</td>
                   <td>{h.atividade}</td>
                   <td>{h.nota}</td>
-                  <td>
-                    {new Date(h.data).toLocaleDateString("pt-BR")}
-                  </td>
+                  <td>{new Date(h.data).toLocaleDateString("pt-BR")}</td>
                 </tr>
               ))}
             </tbody>
