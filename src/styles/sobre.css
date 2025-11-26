@@ -73,15 +73,3 @@ footer {
   font-weight: 500;
 }
 
-/* ====================== RESPONSIVO ====================== */
-@media(max-width: 768px) {
-  .sobre-container h2 {
-    font-size: 32px;
-  }
-  .sobre-container p {
-    font-size: 16px;
-  }
-  .missao-valores {
-    flex-direction: column;
-  }
-}
